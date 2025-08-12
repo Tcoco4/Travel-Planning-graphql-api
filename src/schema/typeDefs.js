@@ -3,7 +3,7 @@ import { gql } from "apollo-server";
 export const typeDefs = gql`
   #Query Definiton
   type Query {
-    suggestCities(countryName: String): [City!]!
+    suggestCities(input: String): [City!]
     weatherForCity(input: WeatherForecastInput): WeatherForecast!
     activitiesRankedInCity(id: ID!): [ActivityScore!]!
   }

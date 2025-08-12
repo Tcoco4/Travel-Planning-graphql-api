@@ -2,11 +2,11 @@ export default class OpenMeteoClient {
   geocodeURL = "https://geocoding-api.open-meteo.com/v1/search";
   weatherUrl = "https://api.open-meteo.com/v1/forecast";
 
-  async getGeoLocationData(city, limit = 1, language = "en", format = "json") {
+  async getGeoLocationData(input, limit = 8, language = "en", format = "json") {
     //Modify to accept country
     let response;
     const url = `${this.geocodeUrl}?name=${encodeURIComponent(
-      city
+      input
     )}&count=${limit}&language=${language}$format=${format}`;
 
     await fetch(url)

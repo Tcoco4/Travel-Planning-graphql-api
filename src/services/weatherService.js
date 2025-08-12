@@ -7,8 +7,8 @@ export default class WeatherService {
     this.client = client;
   }
 
-  async getGeoCodingData() {
-    const geoData = await this.client.getGeoLocationData();
+  async getGeoCodingData(input) {
+    const geoData = await this.client.getGeoLocationData(input);
     return geoData;
   }
   async getForecastPerCity() {
