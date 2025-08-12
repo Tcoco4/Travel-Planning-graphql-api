@@ -13,9 +13,9 @@ export const typeDefs = gql`
 
   #Type Definition
   type City {
-    id: ID!
     name: String!
     country: String
+    admin1: String
     latitude: Float!
     longitude: Float!
     timezone: String

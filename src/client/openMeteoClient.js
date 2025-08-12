@@ -1,39 +1,13 @@
 export default class OpenMeteoClient {
   geocodeURL = "https://geocoding-api.open-meteo.com/v1/search";
-  weatherUrl = "https://api.open-meteo.com/v1/forecast";
+  weatherURL = "https://api.open-meteo.com/v1/forecast";
 
-  async getGeoLocationData(input, limit = 8, language = "en", format = "json") {
-    //Modify to accept country
-    let response;
-    const url = `${this.geocodeUrl}?name=${encodeURIComponent(
+  async getGeoLocationData(input, limit = 8, language = "en") {
+    const url = `${this.geocodeURL}?name=${encodeURIComponent(
       input
-    )}&count=${limit}&language=${language}$format=${format}`;
+    )}&count=${limit}&language=${language}`;
 
-    await fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.results && data.results.length > 0) {
-          const { latitude, longitude, name } = data.results[0];
-
-          return (response = {
-            success: true,
-            data: { latitude: latitude, longitude: longitude, name: name },
-            message: "location found",
-          });
-        } else
-          return (response = {
-            success: false,
-            data: null,
-            message: "location not found",
-          });
-      })
-      .catch(
-        (e) =>
-          (response = {
-            success: false,
-            message: `Error ${e}` || "Error Occured",
-          })
-      );
+    return await fetch(url);
   }
 
   async getWeatherForecastData(
@@ -56,38 +30,11 @@ export default class OpenMeteoClient {
       forecast_days,
     });
 
-    const url = `${this.weatherUrl}?${params.toString()}`;
+    const url = `${this.weatherURL}?${params.toString()}`;
 
-    await fetch(url)
-      .then((res) => {
-        res.json();
-      })
-      .then((data) => {
-        if (!data)
-          return (response = {
-            success: false,
-            message: " Weather data not found",
-            data: null,
-          });
-        else {
-          const { daily } = data;
+    return await fetch(url);
 
-          return (response = {
-            success: true,
-            message: "Weather data found",
-            data: transform(daily),
-          });
-        }
-      })
-      .catch(
-        (e) =>
-          (response = {
-            success: false,
-            message: `Error ${e} ` || "Error Occured",
-          })
-      );
-
-    if (!res.ok) throw new Error("Weather API failed");
-    return res.json();
+    // if (!res.ok) throw new Error("Weather API failed");
+    // return res.json();
   }
 }
