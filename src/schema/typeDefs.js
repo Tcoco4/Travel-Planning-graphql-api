@@ -1,6 +1,6 @@
-const { gql } = require("apollo-server");
+import { gql } from "apollo-server";
 
-const typeDefs = gql`
+export const typeDefs = gql`
   #Query Definiton
   type Query {
     suggestCities(countryName: String): [City!]!
@@ -88,4 +88,3 @@ const typeDefs = gql`
     OUTDOOR_SIGHTSEEING
   }
 `;
-module.exports = { typeDefs };
