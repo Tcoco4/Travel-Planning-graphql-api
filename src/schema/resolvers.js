@@ -1,22 +1,21 @@
 import WeatherService from "../services/weatherService.js";
+import OpenMeteoClient from "../client/openMeteoClient.js";
 
-const wClient = new WeatherService();
+const client = new OpenMeteoClient();
+const weatherService = new WeatherService(client);
 
 export const resolvers = {
   Query: {
     suggestCities: async (parent, args) => {
-      // need to suggest City based on county destination
-      // user selects city, then we get geo data and weather
-
       const input = args.input;
-      console.log("Input ", input);
-      const data = await wClient.getGeoCodingData(input);
-      console.log("Data ", data);
+      return await weatherService.getGeoCodingData(input).then((res) => {
+        return res;
+      });
     },
     weatherForCity: async (parent, args) => {
       const input = args.input;
       console.log("Input ", input);
-      const data = await wClient.getForecastPerCity();
+      const data = await weatherService.getForecastPerCity();
     },
     activitiesRankedInCity: (parent, args) => {},
   },
