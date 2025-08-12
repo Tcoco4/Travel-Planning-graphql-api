@@ -13,14 +13,18 @@ export default class OpenMeteoClient {
   async getWeatherForecastData(
     lat,
     lon,
+    forecast_days = 4,
     daily = [
       "temperature_2m_min",
       "temperature_2m_max",
+      "windspeed_10m_min",
+      "windspeed_10m_max",
+      "sunrise",
+      "sunset",
       "precipitation_sum",
       "weathercode",
     ],
-    timezone = "auto",
-    forecast_days = 4
+    timezone = "auto"
   ) {
     const params = new URLSearchParams({
       latitude: String(lat),
@@ -33,8 +37,5 @@ export default class OpenMeteoClient {
     const url = `${this.weatherURL}?${params.toString()}`;
 
     return await fetch(url);
-
-    // if (!res.ok) throw new Error("Weather API failed");
-    // return res.json();
   }
 }

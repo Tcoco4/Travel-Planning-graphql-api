@@ -1,3 +1,4 @@
+import { transform } from "../utils/transformer.js";
 export default class WeatherService {
   constructor(client) {
     if (!client) throw new Error("WeatherService requires an API client");
@@ -8,6 +9,8 @@ export default class WeatherService {
     return await this.client
       .getGeoLocationData(input)
       .then(async (res) => {
+        if (!res.ok) throw new Error("Geolocation API failed");
+
         return await res.json().then((data) => {
           if (data.results && data.results.length > 0) {
             let results = [];
@@ -38,10 +41,12 @@ export default class WeatherService {
           })
       );
   }
-  async getForecastPerCity() {
+  async getForecastPerCity(input) {
     return await this.client
-      .getWeatherForecastData()
+      .getWeatherForecastData(input.latitude, input.longitude)
       .then(async (res) => {
+        if (!res.ok) throw new Error("Weather API failed");
+
         return await res.json().then((data) => {
           if (!data)
             return (response = {
@@ -50,13 +55,13 @@ export default class WeatherService {
               data: null,
             });
           else {
-            const { daily } = data;
+            const { daily, daily_units } = data;
+            // const { temperature_2m_min, windspeed_10m_min } = daily_units;
+            const transformedData = transform(daily);
 
-            return (response = {
-              success: true,
-              message: "Weather data found",
-              data: transform(daily),
-            });
+            // transformedData.temperatureUnit = temperature_2m_min;
+            // transformedData.windspeedUnit = windspeed_10m_min;
+            return transformedData;
           }
         });
       })

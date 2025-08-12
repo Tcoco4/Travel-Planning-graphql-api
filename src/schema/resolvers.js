@@ -6,16 +6,13 @@ const weatherService = new WeatherService(client);
 
 export const resolvers = {
   Query: {
-    suggestCities: async (parent, args) => {
+    suggestCities: async (_, args) => {
       const input = args.input;
-      return await weatherService.getGeoCodingData(input).then((res) => {
-        return res;
-      });
+      return await weatherService.getGeoCodingData(input).then((res) => res);
     },
-    weatherForCity: async (parent, args) => {
-      const input = args.input;
-      console.log("Input ", input);
-      const data = await weatherService.getForecastPerCity();
+    weatherForCity: async (_, args) => {
+      const input = args.weatherForecast;
+      return await weatherService.getForecastPerCity(input).then((res) => res);
     },
     activitiesRankedInCity: (parent, args) => {},
   },

@@ -1,13 +1,13 @@
 export const transform = (data) => {
-  const transformed = {};
+  const transformed = [];
 
   const keys = Object.keys(data).filter((key) => key !== "time");
 
-  data.time.forEach((date, index) => {
-    transformed[date] = {};
+  return data.time.map((date, index) => {
+    const weather = {};
     keys.forEach((key) => {
-      transformed[date][key] = daily[key][index];
+      weather[key] = data[key][index];
     });
+    return { date, weather };
   });
-  return transformed;
 };
