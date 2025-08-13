@@ -13,10 +13,12 @@ export const isSkiiDay = (
   const okayWind = minWind >= 30 && maxWind <= 40;
   const moderateRain = precipitationSum > 10 && precipitationSum < 20;
 
-  if (goodTemp && goodWind && goodSnow) return "Good to Skii";
+  if (goodTemp && goodWind && goodSnow)
+    return { reason: "Good to Skii", score: 1 };
 
-  if (okayTemp && okayWind && moderateRain) return "Okay to Skii";
-  return "Bad to Skii";
+  if (okayTemp && okayWind && moderateRain)
+    return { reason: "Okay to Skii", score: 1 };
+  return { reason: "Bad to Skii", score: 0 };
 };
 
 export const isSurfDay = (
@@ -34,9 +36,11 @@ export const isSurfDay = (
   const okayWind = minWind > 15 && maxWind <= 25;
   const moderateRain = precipitationSum > 3 && precipitationSum < 5;
 
-  if (goodTemp && goodWind && lowRain) return "Good to Surf";
-  if (okayTemp && okayWind && moderateRain) return "Okay to Surf";
-  return "Bad to Surf";
+  if (goodTemp && goodWind && lowRain)
+    return { reason: "Good to Surf", score: 1 };
+  if (okayTemp && okayWind && moderateRain)
+    return { reason: "Okay to Surf", score: 1 };
+  return { reason: "Bad to Surf", score: 0 };
 };
 
 export const isOutdoorDay = (
@@ -54,11 +58,12 @@ export const isOutdoorDay = (
   const okayWind = minWind > 20 && maxWind <= 30;
   const moderateRain = precipitationSum > 1 && precipitationSum < 3;
 
-  if (goodTemp && goodWind && lowRain) return "Good for Outdoor Sightseeing";
+  if (goodTemp && goodWind && lowRain)
+    return { reason: "Good for Outdoor Sightseeing", score: 1 };
   if (okayTemp && okayWind && moderateRain)
-    return "Okay for Outdoor Sightseeing";
+    return { reason: "Okay for Outdoor Sightseeing", score: 1 };
 
-  return "Bad for Outdoor Sightseeing";
+  return { reason: "Bad for Outdoor Sightseeing", score: 0 };
 };
 
 export const isIndoorDay = (
@@ -76,8 +81,9 @@ export const isIndoorDay = (
   const lowRain = precipitationSum < 3;
 
   if (indoorTemp && indoorWind && heavyRain)
-    return "Good for Indoor Sightseeing";
-  if (okayWind && lowRain) return "Okay for indoor Sightseeing";
+    return { reason: "Good for Indoor Sightseeing", score: 1 };
+  if (okayWind && lowRain)
+    return { reason: "Okay for indoor Sightseeing", score: 1 };
 
-  return "Bad for Indoor Sightseeing";
+  return { reason: "Bad for Indoor Sightseeing", score: 0 };
 };

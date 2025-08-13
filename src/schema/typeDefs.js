@@ -5,7 +5,7 @@ export const typeDefs = gql`
   type Query {
     suggestCities(input: String): [City!]
     weatherForCity(weatherForecast: WeatherForecastInput): [DailyWeatherEntry!]
-    activitiesRankedInCity(id: ID!): [ActivityScore!]!
+    rankActivitiesInCity(activityInput: ActivityInput): [ActivityScore!]
   }
 
   #Scalar Definition
@@ -38,16 +38,23 @@ export const typeDefs = gql`
   }
   type ActivityScore {
     activity: Activity!
-    score: Int!
-    reasons: [String!]!
+    details: [ScoreDetails]!
   }
-
+  type ScoreDetails {
+    date: String
+    reason: String
+    score: Int
+  }
   #Input Definitions
   input WeatherForecastInput {
     latitude: Float!
     longitude: Float!
   }
 
+  input ActivityInput {
+    latitude: Float!
+    longitude: Float!
+  }
   #Enum definitions
   enum Activity {
     SKIING
