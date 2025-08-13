@@ -1,18 +1,99 @@
 # Travel GraphQL API
 
-Features:
+## Features:
 
-- Dynamic city suggestions (Open-Meteo Geocoding API)
+- Dynamic city suggestions (Open-Meteo Geocoding API) based on partial or complete user input.
 - Weather forecast for a selected city (Open-Meteo Forecast API)
-- Ranking activities (Skiing, Surfing, Indoor sightseeing, Outdoor sightseeing) based on forecasted conditions
-<!-- - Clean architecture: resolvers -> use-cases -> services -> external adapters
-- Simple caching layer (in-memory / swap to Redis) -->
+- Ranking activities (Skiing, Surfing, Indoor sightseeing, Outdoor sightseeing) based on forecasted conditions using a scoring system of
 
-# RUN:
+```
+    0 - Bad
+    1 - Okay
+    2 - Good
+```
 
-1. npm install
-2. npm run start
+- Designed according to clean architecture: resolvers -> services -> openMeteoClient -> OpenMeteo Api
 
-# Example Queries
+<!-- - Unit Tests : Jest -->
 
-`ToDo`
+## Running Locally:
+
+1. Clone repo
+2. npm install
+3. npm run start
+4. Visit http://localhost:4000 (Apollo playground for testing queries)
+
+## Example Queries
+
+- suggestCities endpoint
+
+```
+    query GetSuggestedCities($input: String){
+        suggestCities(input: $input){
+            country,
+            latitude,
+            longitude,
+            name,
+            timezone
+        }
+    }
+
+
+```
+
+- weatherForCity endpoint
+
+```
+query GetWeatherForCity($cityInput: WeatherForecastInput) {
+  weatherForCity(weatherForecast: $cityInput){
+    date,
+    weather {
+        temperature_2m_min
+        temperature_2m_max
+        windspeed_10m_min
+        windspeed_10m_max,
+        sunrise
+        sunset
+        precipitation_sum
+        weathercode
+    }
+  }
+}
+```
+
+- rankingActivities endpoint
+
+```
+query RankingActivities($rankingInput: ActivityInput) {
+  rankActivitiesInCity(activityInput: $rankingInput){
+    latitude,
+    longitude,
+    activityRanking {
+        date,
+        skiing,
+        surfing,
+        outdoorSightseeing,
+        indoorSightseeing
+   }
+
+  }
+}
+```
+
+## Variables
+
+```
+{
+    "input": "Cap"
+
+    "cityInput": {
+        "latitude": -33.92584,
+        "longitude": 18.42322,
+    }
+
+    "rankingInput" :{
+        "latitude": -33.38121,
+        "longitude": 19.66934,
+    }
+}
+```
