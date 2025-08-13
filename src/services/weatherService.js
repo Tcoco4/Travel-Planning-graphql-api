@@ -33,13 +33,13 @@ export default class WeatherService {
           }
         });
       })
-      .catch(
-        (e) =>
-          (response = {
-            success: false,
-            message: `Error ${e}` || "Error Occured",
-          })
-      );
+      .catch((e) => {
+        let response;
+        response = {
+          success: false,
+          message: `Error ${e}` || "Error Occured",
+        };
+      });
   }
   async getForecastPerCity(input) {
     return await this.client
@@ -65,12 +65,12 @@ export default class WeatherService {
           }
         });
       })
-      .catch(
-        (e) =>
-          (response = {
-            success: false,
-            message: `Error ${e} ` || "Error Occured",
-          })
-      );
+      .catch((e) => {
+        let response;
+        response = {
+          success: false,
+          message: `Error ${e} ` || "Error Occured",
+        };
+      });
   }
 }

@@ -5,7 +5,7 @@ export const typeDefs = gql`
   type Query {
     suggestCities(input: String): [City!]
     weatherForCity(weatherForecast: WeatherForecastInput): [DailyWeatherEntry!]
-    activitiesRankedInCity(id: ID!): [ActivityScore!]!
+    rankActivitiesInCity(activityInput: ActivityInput): ActivityRanking
   }
 
   #Scalar Definition
@@ -20,6 +20,12 @@ export const typeDefs = gql`
     longitude: Float!
     timezone: String
   }
+  type DailyWeatherEntry {
+    date: String!
+    temperatureUnit: String
+    windspeedUnit: String
+    weather: DailyWeather
+  }
   type DailyWeather {
     temperature_2m_min: Float
     temperature_2m_max: Float
@@ -30,24 +36,28 @@ export const typeDefs = gql`
     precipitation_sum: Float
     weathercode: Int
   }
-  type DailyWeatherEntry {
-    date: String!
-    temperatureUnit: String
-    windspeedUnit: String
-    weather: DailyWeather
+  type ActivityRanking {
+    latitude: Float
+    longitude: Float
+    activityRanking: [DailyActivityRanking!]
   }
-  type ActivityScore {
-    activity: Activity!
-    score: Int!
-    reasons: [String!]!
+  type DailyActivityRanking {
+    date: String
+    skiing: Int
+    surfing: Int
+    outdoorSightseeing: Int
+    indoorSightseeing: Int
   }
-
   #Input Definitions
   input WeatherForecastInput {
     latitude: Float!
     longitude: Float!
   }
 
+  input ActivityInput {
+    latitude: Float!
+    longitude: Float!
+  }
   #Enum definitions
   enum Activity {
     SKIING
