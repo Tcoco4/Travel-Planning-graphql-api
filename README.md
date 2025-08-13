@@ -26,6 +26,7 @@
 ## Example Queries
 
 - suggestCities endpoint
+  (has a limit of 8 cities returned)
 
 ```
     query GetSuggestedCities($input: String){
@@ -41,7 +42,7 @@
 
 ```
 
-- weatherForCity endpoint
+- weatherForCity endpoint (returns daily data forecast for 4 days)
 
 ```
 query GetWeatherForCity($cityInput: WeatherForecastInput) {
