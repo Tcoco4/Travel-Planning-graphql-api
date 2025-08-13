@@ -5,7 +5,7 @@ export const typeDefs = gql`
   type Query {
     suggestCities(input: String): [City!]
     weatherForCity(weatherForecast: WeatherForecastInput): [DailyWeatherEntry!]
-    rankActivitiesInCity(activityInput: ActivityInput): [ActivityScore!]
+    rankActivitiesInCity(activityInput: ActivityInput): ActivityRanking
   }
 
   #Scalar Definition
@@ -20,6 +20,12 @@ export const typeDefs = gql`
     longitude: Float!
     timezone: String
   }
+  type DailyWeatherEntry {
+    date: String!
+    temperatureUnit: String
+    windspeedUnit: String
+    weather: DailyWeather
+  }
   type DailyWeather {
     temperature_2m_min: Float
     temperature_2m_max: Float
@@ -30,20 +36,17 @@ export const typeDefs = gql`
     precipitation_sum: Float
     weathercode: Int
   }
-  type DailyWeatherEntry {
-    date: String!
-    temperatureUnit: String
-    windspeedUnit: String
-    weather: DailyWeather
+  type ActivityRanking {
+    latitude: Float
+    longitude: Float
+    activityRanking: [DailyActivityRanking!]
   }
-  type ActivityScore {
-    activity: Activity!
-    details: [ScoreDetails]!
-  }
-  type ScoreDetails {
+  type DailyActivityRanking {
     date: String
-    reason: String
-    score: Int
+    skiing: Int
+    surfing: Int
+    outdoorSightseeing: Int
+    indoorSightseeing: Int
   }
   #Input Definitions
   input WeatherForecastInput {
