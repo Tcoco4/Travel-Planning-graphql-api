@@ -140,6 +140,32 @@ describe("Weather Service Tests", () => {
     expect(cities[0].longitude).toBe(18.42322);
   });
 
+  it("No Input for getGeoLocationData ", async () => {
+    const mockClient = {
+      getGeoLocationData: jest.fn().mockResolvedValue({
+        results: null,
+      }),
+    };
+    const service = new WeatherService(mockClient);
+    const cities = await service.getGeoCodingData("");
+
+    expect(cities).toBeNull();
+  });
+  it("Error thrown in getGeoCodingData", async () => {
+    const mockClient = {
+      getGeoLocationData: jest
+        .fn()
+        .mockRejectedValue(new Error("Geolocation API failed")),
+    };
+    const service = new WeatherService(mockClient);
+
+    await expect(
+      service.getGeoCodingData({
+        latitude: -26.20227,
+        longitude: 28.04363,
+      })
+    ).rejects.toThrow("Geolocation API failed");
+  });
   it("Forecast Data over 4 days to be Retrieved for Johannesburg", async () => {
     const mockClient = {
       getWeatherForecastData: jest.fn().mockResolvedValue({
@@ -187,5 +213,20 @@ describe("Weather Service Tests", () => {
     expect(forecast.weather).toHaveLength(4);
     expect(forecast.latitude).toBe(-26.20227);
     expect(forecast.longitude).toBe(28.04363);
+  });
+  it("Error thrown in getForecastPerCity", async () => {
+    const mockClient = {
+      getWeatherForecastData: jest
+        .fn()
+        .mockRejectedValue(new Error("Forecast API failed")),
+    };
+    const service = new WeatherService(mockClient);
+
+    await expect(
+      service.getForecastPerCity({
+        latitude: -26.20227,
+        longitude: 28.04363,
+      })
+    ).rejects.toThrow("Forecast API failed");
   });
 });

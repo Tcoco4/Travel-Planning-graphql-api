@@ -25,29 +25,17 @@ export default class WeatherService {
           });
 
           return results;
-        } else {
-          return "location(s) not found!";
-        }
+        } else return null;
       })
       .catch((e) => {
-        let response;
-        response = {
-          success: false,
-          message: `Error ${e}` || "Error Occured",
-        };
+        throw e;
       });
   }
   async getForecastPerCity(input) {
     return await this.client
       .getWeatherForecastData(input.latitude, input.longitude)
       .then(async (data) => {
-        if (!data)
-          return (response = {
-            success: false,
-            message: " Weather data not found",
-            data: null,
-          });
-        else {
+        if (data) {
           const { daily, daily_units } = data;
           const { temperature_2m_min, windspeed_10m_min } = daily_units;
           const transformedData = transform(daily);
@@ -62,11 +50,7 @@ export default class WeatherService {
         }
       })
       .catch((e) => {
-        let response;
-        response = {
-          success: false,
-          message: `Error ${e} ` || "Error Occured",
-        };
+        throw e;
       });
   }
 }
