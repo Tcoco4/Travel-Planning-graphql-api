@@ -2,6 +2,9 @@
 
 ## Features:
 
+## Features:
+
+- Dynamic city suggestions (Open-Meteo Geocoding API) based on partial or complete user input.
 - Dynamic city suggestions (Open-Meteo Geocoding API) based on partial or complete user input.
 - Weather forecast for a selected city (Open-Meteo Forecast API)
 - Ranking activities (Skiing, Surfing, Indoor sightseeing, Outdoor sightseeing) based on forecasted conditions using a scoring system of
