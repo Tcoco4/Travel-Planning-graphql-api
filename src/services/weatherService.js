@@ -48,14 +48,13 @@ export default class WeatherService {
             weather: transformedData,
           };
         }
-          return {
-            latitude: input.latitude,
-            longitude: input.longitude,
-            temperatureUnit: temperature_2m_min,
-            windspeedUnit: windspeed_10m_min,
-            weather: transformedData,
-          };
-        }
+        return {
+          latitude: input.latitude,
+          longitude: input.longitude,
+          temperatureUnit: temperature_2m_min,
+          windspeedUnit: windspeed_10m_min,
+          weather: transformedData,
+        };
       })
       .catch((e) => {
         throw e;
