@@ -34,7 +34,8 @@ export class ActivityRankingService {
     });
   }
   async rankActivities(input, weatherData) {
-    const activityRanking = this.scoring(weatherData);
+    const { weather } = weatherData;
+    const activityRanking = this.scoring(weather);
 
     return {
       latitude: input.latitude,
