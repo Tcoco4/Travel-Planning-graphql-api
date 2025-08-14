@@ -7,7 +7,10 @@ export default class OpenMeteoClient {
       input
     )}&count=${limit}&language=${language}`;
 
-    return await fetch(url);
+    return await fetch(url).then((res) => {
+      if (!res.ok) throw new Error("Geolocation API failed");
+      return res.json();
+    });
   }
 
   async getWeatherForecastData(
@@ -36,6 +39,9 @@ export default class OpenMeteoClient {
 
     const url = `${this.weatherURL}?${params.toString()}`;
 
-    return await fetch(url);
+    return await fetch(url).then((res) => {
+      if (!res.ok) throw new Error("Forecast API failed");
+      return res.json();
+    });
   }
 }
