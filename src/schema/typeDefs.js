@@ -4,7 +4,7 @@ export const typeDefs = gql`
   #Query Definiton
   type Query {
     suggestCities(input: String): [City!]
-    weatherForCity(weatherForecast: WeatherForecastInput): [DailyWeatherEntry!]
+    weatherForCity(weatherForecast: WeatherForecastInput): ForecastWeather
     rankActivitiesInCity(activityInput: ActivityInput): ActivityRanking
   }
 
@@ -20,10 +20,15 @@ export const typeDefs = gql`
     longitude: Float!
     timezone: String
   }
-  type DailyWeatherEntry {
-    date: String!
+  type ForecastWeather {
+    latitude: String
+    longitude: String
     temperatureUnit: String
     windspeedUnit: String
+    weather: [DailyWeatherEntry!]
+  }
+  type DailyWeatherEntry {
+    date: String!
     weather: DailyWeather
   }
   type DailyWeather {

@@ -49,12 +49,16 @@ export default class WeatherService {
           });
         else {
           const { daily, daily_units } = data;
-          // const { temperature_2m_min, windspeed_10m_min } = daily_units;
+          const { temperature_2m_min, windspeed_10m_min } = daily_units;
           const transformedData = transform(daily);
 
-          // transformedData.temperatureUnit = temperature_2m_min;
-          // transformedData.windspeedUnit = windspeed_10m_min;
-          return transformedData;
+          return {
+            latitude: input.latitude,
+            longitude: input.longitude,
+            temperatureUnit: temperature_2m_min,
+            windspeedUnit: windspeed_10m_min,
+            weather: transformedData,
+          };
         }
       })
       .catch((e) => {
