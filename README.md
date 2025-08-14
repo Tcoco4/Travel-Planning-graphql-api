@@ -28,6 +28,7 @@
 
 - Clean Architecture principles:
   `resolvers -> services -> openMeteoClient -> OpenMeteo Api `
+- [Architecture](docs/gql-api-arch.png)
 - Nodejs with Apollo Server for Graphql
 - OpenMeteo Client for retrieving weather data
 
